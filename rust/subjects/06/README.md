@@ -92,14 +92,11 @@ _The [first Rust Koan](https://users.rust-lang.org/t/rust-koans/2408)._
 ## General Rules
 * You **must not** have a `main` present if not specifically requested.
 
-* Any exercise managed by cargo you turn in must compile _without warnings_ using the `cargo test` command. If not managed by cargo, it must compile _without warnings_ with the `rustc` compiler available on the school's
-machines without additional options.
+* Any exercise managed by cargo you turn in must compile _without warnings_ using the `cargo test` command. If not managed by cargo, it must compile _without warnings_ with the `rustc` compiler available on the school's machines without additional options.
 
 * Only dependencies specified in the allowed dependencies section are allowed.
 
-* If not specified otherwise by the task description, you are generally not authorized to modify lint levels - either using `#[attributes]`,
-`#![global_attributes]` or with command-line arguments. You may optionally allow the `dead_code`
-lint to silence warnings about unused variables, functions, etc.
+* If not specified otherwise by the task description, you are generally not authorized to modify lint levels, either using local attributes (`#[...]`), global attributes (`#![...]`), or with command-line arguments. You may optionally use the `allow(dead_code)` lint to silence warnings about unused variables, functions, etc.
 
 ```rust
 // Either globally:
@@ -112,8 +109,7 @@ fn my_unused_function() {}
 
 * For exercises managed with cargo, the command `cargo clippy -- -D warnings` must run with no errors!
 
-* You are _strongly_ encouraged to write extensive tests for the functions and programs you turn in. Tests can use the symbols you want, even if
-they are not specified in the `allowed symbols` section. **However**, tests should not introduce **any additional external dependencies** beyond
+* You are _strongly_ encouraged to write extensive tests for the functions and programs you turn in. Tests can use the symbols you want, even if they are not specified in the `allowed symbols` section. **However**, tests should not introduce **any additional external dependencies** beyond
 those already required by the subject.
 
 * All primitive types, i.e the ones you are able to use without importing them, are allowed.
@@ -128,7 +124,7 @@ those already required by the subject.
 
 In this module, you will take your first steps in writing dangerous code safely. 
 If you keep going until the very end, you will learn stuff no sane person should ever have to
-worry about, like cross-compiling languages with **F**oreign **F**unction **I**nterfaces (FFI), or the `#![no_main]` attribute. 
+worry about, like mixing C and Rust with **F**oreign **F**unction **I**nterfaces (FFI), or the `#![no_main]` attribute. 
 
 Attentive readers will have noticed a missing line in the general rules of this subject. You are _allowed_ to use `unsafe` code in this module! However, some rules must be followed.
 
@@ -177,7 +173,7 @@ unsafe trait Zeroable {
 }
 ```
 
-4. Every time an `unsafe` block is used, it must be annotated with a `SAFETY:` directive, explaining the 
+4. Every time an `unsafe` block is used, it must be annotated with a `SAFETY:` comment, explaining the 
 thinking process behind this code.
 
 ```rust
@@ -188,7 +184,7 @@ let slice: &[u32] = &[1, 2, 3];
 let val = unsafe { get_unchecked(slice, 2) };
 ```
 
-5. Every time an `unsafe impl` is declared, it must be annotated with a `SAFETY:` directive.
+5. Every time an `unsafe impl` is declared, it must be annotated with a `SAFETY:` comment.
 
 ```rust
 // SAFETY:
@@ -201,7 +197,7 @@ To summarize:
 
 - `unsafe fn` means **_'know what you are doing before calling this function'_**.
 - `unsafe trait` means **_'know what you are doing before implementing this trait'_**.
-- `unsafe {}` and `unsafe impl` both mean **_'I know what I am doing'_**.
+- `unsafe {}` and `unsafe impl` both mean **_'I know what I am doing, let me cook'_**.
 
 ## Exercise 00: Libft
 
@@ -222,9 +218,9 @@ pub unsafe fn ft_strlen(s: *const u8) -> usize;
 pub unsafe fn ft_strcpy(dst: *mut u8, src: *const u8);
 ```
 
-- `ft_swap` must swap any two values of any type. Maybe `T` can be copied, maybe not. Maybe it has a default value. Maybe not.
+- `ft_swap` must swap any two values of any type. Maybe `T` can be copied, maybe not. Maybe it has a         default value. Maybe not.
 - `ft_strlen` must count the number of non-null bytes, starting at `s`. You must write an
-  appropriate `# Safety` section in the documentation of that function to educate about its users
+  appropriate `# Safety` section in the documentation of that function to educate its callers
   about its correct usage.
 - `ft_strcpy` must copy the null-terminated string at `src` into `dst`. Just like `ft_strlen`, you
   must _precisely_ describe the requirements of your function within a `# Safety` section in its
