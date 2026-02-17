@@ -351,7 +351,6 @@ use i32::cmp;
 use ftkit::{read_number, random_number};
 
 const allowed_dependencies = ["ftkit"];
-const allowed_dependencies = [""];
 const turn_in_directory = "ex06/";
 const files_to_turn_in = ["src/main.rs", "Cargo.toml"];
 ```
