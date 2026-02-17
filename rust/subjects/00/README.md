@@ -103,7 +103,7 @@ The functions must be prototyped as follows:
 
 ```rust
 pub fn yes() -> !;
-pub fn collatz(start: u32);
+pub fn collatz(n: u32);
 pub fn print_bytes(s: &str);
 ```
 
@@ -123,18 +123,15 @@ y
 
 The `collatz` function must execute the following algorithm...
 
-* Let $n$ be any natural number.
+* Let $n$ be any positive integer ($n \in \mathbb{Z}^{+}$).
 * If $n$ is even, then $n$ becomes $\frac{n}{2}$
 * If $n$ is odd, then $n$ becomes $3n + 1$
 
 ...until $n$ equals 1. On each iteration, $n$ must be displayed on the standard output, followed by a line feed.
 Make sure to prevent timeouts!
 
+Calling `collatz` with `3` should produce the following output:
 ```txt
-Input:
-3
-
-Output:
 3
 10
 5
@@ -147,11 +144,8 @@ Output:
 
 The `print_bytes` function must print every byte of the provided string.
 
+Calling `print_bytes` with `"Déjà Vu\n"` should produce the following output:
 ```txt
-Input:
-"Déjà Vu\n"
-
-Output:
 68
 195
 169
@@ -268,7 +262,8 @@ integer overflow checks. For this reason, you will name it `no-overflows`.
 
 ```txt
 >_ cargo run --bin test-overflows
-thread 'main' panicked at 'attempt to add with overflow', src/overflow.rs:3:5
+thread 'main' panicked at src/overflow.rs:3:35:
+attempt to add with overflow
 >_ cargo run --profile no-overflows --bin test-overflows
 255u8 + 1u8 == 0
 ```
