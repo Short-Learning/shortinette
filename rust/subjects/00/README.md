@@ -380,10 +380,9 @@ use std::{
 };
 use ftkit::ARGS;
 
-const allowed_dependencies = "ftkit";
-const allowed_dependencies = [""];
+const allowed_dependencies = ["ftkit"];
 const turn_in_directory = "ex07/";
-const files_to_turn_in = ["src/main.rs", "src/overflow.rs", "src/other.rs", "Cargo.toml"];
+const files_to_turn_in = ["src/lib.rs", "src/main.rs", "Cargo.toml"];
 ```
 
 Create a **library** that exposes the function `strpcmp`.
