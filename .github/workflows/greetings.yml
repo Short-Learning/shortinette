@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/first-interaction@v1
       with:
-        repo-token: ${{ secrets.TOKEN_GITHUB }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: "Hello @${{ github.event.issue.user.login }}! 👋 Thank you for opening your first issue in this repository. We appreciate your contribution to our project! 
 
         A maintainer will review your issue soon. If you're reporting a bug, please provide as much detail as possible – including steps to reproduce, expected vs. actual behavior, and any relevant logs or screenshots. The more information you can provide, the better we can assist you.
