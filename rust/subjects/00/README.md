@@ -299,7 +299,7 @@ pub fn num_days_in_month(year: u32, month: u32) -> u32;
 * `friday_the_13th` writes every Friday that falls on the 13th of the month
 since year 1 until the year given as an argument into the writer W
 * `is_leap_year` must determine whether a given year is a leap year or not.
-* `num_days_in_month` must compute how many days a given month of a given year has.
+* `num_days_in_month` must compute how many days a given month of a given year has. The `month` argument is *1-indexed* (`1 == January && .. && 12 == December`).
 
 These three functions must be part of the `src/lib.rs` file.
 
@@ -329,7 +329,7 @@ work as expected. Specifically, you must show that:
 * 2003 is a common year.
 * February has 29 days on leap years, but 28 on common years.
 * Other months have the correct number of days on both leap and common years.
-* Passing an invalid month to `num_days_in_month` must make the function panic.
+* Passing an invalid month (any value besides `1..=12`) to `num_days_in_month` must make the function panic.
 * Passing an year `0` to either of these three functions must make the function panic.
 
 It must be possible to run those tests using `cargo test`.
