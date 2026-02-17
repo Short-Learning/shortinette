@@ -3,14 +3,14 @@ use std::{
     process::{self},
 };
 
-use crate::{result::TestResult, testable::Testable};
+use crate::{repository_path, result::TestResult, testable::Testable};
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct Exercise00;
 
 impl Testable for Exercise00 {
     fn path(&self) -> path::PathBuf {
-        path::PathBuf::from("ex00")
+        repository_path().join("ex00")
     }
 
     fn run_test(&self) -> TestResult {
