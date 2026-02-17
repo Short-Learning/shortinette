@@ -2,7 +2,7 @@ use rand::seq::SliceRandom;
 use serde::Deserialize;
 use std::{
     fs,
-    path::{self, PathBuf},
+    path::{self, Path, PathBuf},
     process::Command,
 };
 
@@ -18,6 +18,7 @@ struct PackageConfig {
     description: Option<String>,
     authors: Option<Vec<String>>,
     publish: Option<bool>,
+    version: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -90,7 +91,12 @@ fn check_cargo_toml(path: &PathBuf) -> bool {
         return false;
     }
 
-    if cargotoml.package.publish.is_none_or(|publish| publish) {
+    let publishable = cargotoml
+        .package
+        .publish
+        .map_or_else(|| cargotoml.package.version.is_some(), |publish| publish);
+
+    if publishable {
         eprintln!("Publish not set to false");
         return false;
     }
@@ -122,7 +128,7 @@ impl<'a> TestConfig<'a> {
     }
 }
 
-fn nm_check(path: &PathBuf, testconfig: &TestConfig) -> bool {
+fn nm_check(path: &Path, testconfig: &TestConfig) -> bool {
     let profile_folder = testconfig.test_output.profile.unwrap_or("debug");
     let path = path
         .join("target")
@@ -172,14 +178,14 @@ fn run_executable(path: &PathBuf, testconfig: &TestConfig) -> bool {
 
     let output = command.output();
     if let Ok(output) = output {
-        if let Some(exitcode) = output.status.code() {
-            if exitcode != testconfig.test_output.exit_code {
-                eprintln!(
-                    "Incorrect exit code, expected {}, got {}",
-                    testconfig.test_output.exit_code, exitcode
-                );
-                return false;
-            }
+        if let Some(exitcode) = output.status.code()
+            && exitcode != testconfig.test_output.exit_code
+        {
+            eprintln!(
+                "Incorrect exit code, expected {}, got {}",
+                testconfig.test_output.exit_code, exitcode
+            );
+            return false;
         }
 
         let received_output = String::from_utf8_lossy(&output.stdout);
@@ -191,7 +197,7 @@ fn run_executable(path: &PathBuf, testconfig: &TestConfig) -> bool {
             return false;
         }
 
-        if !nm_check(&path, testconfig) {
+        if !nm_check(path, testconfig) {
             return false;
         }
     } else {
