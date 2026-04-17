@@ -16,14 +16,6 @@ fn punch_card() {
     println!("{rust:?}");
 }
 ```
-```rust
-// allowed symbols
-use ;
-
-const allowed_dependencies = [""];
-const turn_in_directory = "ex0/";
-const files_to_turn_in = [];
-```
 
 *Extracted from `rustc`'s [unit tests](https://github.com/rust-lang/rust/blob/131f0c6df6777800aa884963bdba0739299cd31f/tests/ui/weird-exprs.rs#L126-L134).*
 
@@ -66,12 +58,12 @@ those already required by the subject.
 
 ## Exercise 00: Reference me Daddy
 
-```txt
-turn-in directory:
-    ex00/
+```rust
+// no allowed symbols
 
-files to turn-in:
-    src/lib.rs  Cargo.toml
+const allowed_dependencies = [""];
+const turn_in_directory = "ex00/";
+const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
 Create two **functions**. Both must add two integers together.
@@ -86,15 +78,12 @@ pub fn add_assign(a: &mut i32, b: i32);
 
 ## Exercise 01: Point Of No Return (v2)
 
-```txt
-turn-in directory:
-    ex01/
+```rust
+// no allowed symbols
 
-files to turn in:
-    src/lib.rs  Cargo.toml
-
-allowed symbols:
-    none
+const allowed_dependencies = [""];
+const turn_in_directory = "ex01/";
+const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
 Write a **function** that returns the smallest value among two numbers.
@@ -110,15 +99,12 @@ compile.
 
 ## Exercise 02: Don't we all love darkmode?
 
-```txt
-turn-in directory:
-    ex02/
+```rust
+// no allowed symbols
 
-files to turn in:
-    src/lib.rs  Cargo.toml
-
-allowed symbols:
-    none
+const allowed_dependencies = [""];
+const turn_in_directory = "ex02/";
+const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
 Create a **function** that maps three color components to a name.
@@ -176,16 +162,14 @@ mod tests{
 
 ## Exercise 03: Where are my damn keys?!
 
-```txt
-turn-in directory:
-    ex03/
+```rust
+// allowed symbols
+use std::iter::*;
+use <[u32]>::{len, is_empty, contains};
 
-files to turn in:
-    src/lib.rs  Cargo.toml
-
-allowed symbols:
-    <[u32]>::{len, is_empty, contains}
-    std::iter::*
+const allowed_dependencies = [""];
+const turn_in_directory = "ex03/";
+const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
 Write a **function** that returns the first occurrence of `needle` in `haystack`.
@@ -225,17 +209,19 @@ fn test_lifetimes() {
 
 ## Exercise 04: Wait no...
 
-```txt
-turn-in directory:
-    ex04/
+```rust
+// allowed symbols
+use std::{
+    assert,
+    assert_eq,
+    iter::*
+    panic,
+};
+use <[i32]>::{len, is_empty, swap};
 
-files to turn in:
-    src/lib.rs  Cargo.toml
-
-allowed symbols:
-    <[i32]>::{len, is_empty, swap}
-    std::{assert, assert_eq, panic}
-    std::iter::*
+const allowed_dependencies = [""];
+const turn_in_directory = "ex04/";
+const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
 Write a function that sorts a list of boxes in such a way that each box can be "contained" in the previous one without any box being flipped.
@@ -261,16 +247,16 @@ assert_eq!(boxes, [[5, 7], [4, 3], [3, 3], [3, 3], [1, 0]]);
 
 ## Exercise 05: One DSA a day keeps the doctor away
 
-```txt
-turn-in directory:
-    ex05/
+```rust
+// allowed symbols
+use std::{
+    iter::*,
+    vec::Vec::{remove, len, is_empty},
+};
 
-files to turn in:
-    src/lib.rs  Cargo.toml
-
-allowed symbols:
-    std::vec::Vec::{remove, len, is_empty}
-    std::iter*
+const allowed_dependencies = [""];
+const turn_in_directory = "ex05/";
+const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
 Write a **function** that removes all repeated elements of a list, preserving its initial ordering.
@@ -289,19 +275,19 @@ assert_eq!(v, [1, 2, 3, 4]);
 
 ## Exercise 06: Do you _really_ want this job?
 
-```txt
-turn-in directory:
-    ex06/
+```rust
+// allowed symbols
+use std::{
+    assert,
+    iter::*,
+    vec::Vec::{push, len, is_empty, new, reverse},
+};
+use u8::is_ascii_digit;
+use <[i32]>::{is_empty, len};
 
-files to turn in:
-    src/lib.rs  Cargo.toml
-
-allowed symbols:
-    <[i32]>::{is_empty, len}
-    std::vec::Vec::{push, len, is_empty, new, reverse}
-    u8::is_ascii_digit
-    std::assert
-    std::iter*
+const allowed_dependencies = [""];
+const turn_in_directory = "ex06/";
+const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
 Write a **function** that adds two numbers together. The numbers are given as a list of decimal
@@ -325,17 +311,18 @@ assert_eq!(big_add(b"0010", b"0200"), b"210");
 
 ## Exercise 07: Can I get into Google now?
 
-```txt
-turn-in directory:
-    ex07/
+```rust
+// allowed symbols
+use std::{
+    vec::Vec::*,
+    iter::*,
+};
 
-files to turn in:
-    src/lib.rs  Cargo.toml
-
-allowed symbols:
-    std::Vec::*
-    std::iter*
+const allowed_dependencies = [""];
+const turn_in_directory = "ex07/";
+const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
+
 Leonardo has `n` tasks, which he needs to prioritize. He organized them into a vector of tasks. One task is defined as follows:
 
 ```rust
