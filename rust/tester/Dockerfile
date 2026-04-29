@@ -1,4 +1,6 @@
-FROM rust:1.86-slim-bookworm
+FROM rust:1.94-slim-bookworm
+
+RUN rustup component add clippy
 
 RUN apt-get update && apt-get install -y valgrind strace m4 build-essential && rm -rf /var/lib/apt/lists
 
