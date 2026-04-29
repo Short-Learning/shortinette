@@ -313,6 +313,7 @@ assert_eq!(big_add(b"0010", b"0200"), b"210");
 
 ```rust
 // allowed symbols
+use slice::*;
 use std::{
     vec::Vec::*,
     iter::*,
@@ -336,13 +337,13 @@ pub struct Task {
 For a task `i`:
 * `tasks[i].start_time` is the start time for `task[i]`
 * `tasks[i].end_time` is the end time for `task[i]`
-* `tasks[i].cookies` is how many cookies he will get from students for finishing `task[i]` 
+* `tasks[i].cookies` is how many cookies he will get for finishing `task[i]` 
 
 Unfortunately, he sucks at multitasking. Write a **function** which returns the maximum amount of cookies he can get without any tasks overlapping. 
 Your function must have this signature:
 
 ```rust
-pub fn time_manager(tasks: &mut Vec<Task>) -> u32
+pub fn time_manager(tasks: &mut [Task]) -> u32
 ```
 
 **Constraints**
