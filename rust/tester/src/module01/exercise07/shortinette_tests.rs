@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod shortinette_tests_rust_0107 {
-    use ex07::time_manager;
     use ex07::Task;
-    use rand::seq::SliceRandom;
+    use ex07::time_manager;
     use rand::Rng;
+    use rand::seq::SliceRandom;
     use std::fmt::{Display, Error, Formatter};
 
     struct Testcase {
@@ -25,7 +25,11 @@ mod shortinette_tests_rust_0107 {
                     )
                 })
                 .collect();
-            write!(f, "{:?}", strings)
+            write!(
+                f,
+                "{:?} (formatted as Task {{ start_time, end_time, cookies }})",
+                strings
+            )
         }
     }
 
