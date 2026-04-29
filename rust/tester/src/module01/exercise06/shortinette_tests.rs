@@ -14,7 +14,7 @@ mod shortinette_tests_rust_0106 {
     fn test_a_empty() {
         let mut rng = rand::thread_rng();
 
-        let number: Vec<u8> = (0..5).map(|_| rng.gen_range(0..10)).collect();
+        let number: Vec<u8> = (0..5).map(|_| rng.gen_range(b'0'..=b'9')).collect();
         big_add(b"", &number);
     }
 
@@ -23,7 +23,7 @@ mod shortinette_tests_rust_0106 {
     fn test_b_empty() {
         let mut rng = rand::thread_rng();
 
-        let number: Vec<u8> = (0..5).map(|_| rng.gen_range(0..10)).collect();
+        let number: Vec<u8> = (0..5).map(|_| rng.gen_range(b'0'..=b'9')).collect();
         big_add(&number, b"");
     }
 
@@ -85,8 +85,13 @@ mod shortinette_tests_rust_0106 {
             let mut appended = number.clone();
             appended.push(character as u8);
 
+            let mut middle = number.clone();
+            let index = rng.gen_range(1..middle.len());
+            middle.insert(index, character as u8);
+
             input_strings.push(prefixed);
             input_strings.push(appended);
+            input_strings.push(middle);
         }
 
         for input in &input_strings {
