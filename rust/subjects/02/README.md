@@ -132,7 +132,7 @@ those already required by the subject.
 
 * These rules may be overridden by specific exercises.
 
-### Exercise 00: Bruh
+## Exercise 00: Bruh
 ```rust
 // no allowed symbols
 
@@ -270,7 +270,7 @@ mod tests{
 
 Copy the above `test` function and make it compile.
 
-## Exercise 03 Money money money
+## Exercise 03: Money money money
 
 ```rust
 const allowed_dependencies = [""];
@@ -460,7 +460,7 @@ the input string contains no tokens. The part of `s` that has been consumed is s
 original `&str`.
 
 **Note:** You do not have to handle single or double quotes, nor do you have to care about escaping
-with `\\`!
+with `\`!
 
 `next_token` must be usable in this way:
 
