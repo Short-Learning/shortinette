@@ -67,7 +67,7 @@ pub trait Testable {
             .add_dependency("rand", "0.8")
             .expect("Failed to add rand as dependency to test project");
 
-        cargo 
+        cargo
             .add_dependency("libc", "0.2.169")
             .expect("Failed to add libc as dependency to test project");
 

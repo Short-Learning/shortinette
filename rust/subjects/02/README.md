@@ -143,51 +143,63 @@ const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 
 Given this struct
 ```rust
-struct ComplexStruct {
-    name: String,
-    optional_value: Option<Box<i32>>,
-    values: Vec<i32>,
-    some_other: Vec<u128>,
-    metadata: std::collections::HashMap<String, Vec<u8>>,
-    nested: Box<NestedStruct>,
+pub struct ComplexStruct {
+    pub name: String,
+    pub optional_value: Option<Box<i32>>,
+    pub values: Vec<i32>,
+    pub some_other: Vec<u128>,
+    pub metadata: std::collections::HashMap<String, Vec<u8>>,
+    pub nested: Box<NestedStruct>,
 }
 
-struct NestedStruct {
-    number: Box<i32>,
-    optional_floats: Vec<Option<Box<f64>>>,
-    data: std::collections::HashMap<String, Option<Box<i32>>>,
+pub struct NestedStruct {
+    pub number: Box<i32>,
+    pub optional_floats: Vec<Option<Box<f64>>>,
+    pub data: std::collections::HashMap<String, Option<Box<i32>>>,
 }
 ```
 
-Implement the `free` method, such that the following code does *not* compile:
+Implement a `free` method for it. Your implementation must be designed such that any attempt to use an instance of `ComplexStruct` after calling its `.free()` results in a compiler error.
 ```rust
 impl ComplexStruct {
-    pub fn free(...) {
+    pub fn free(/* ... */) {
         // Your implementation
     }
 }
+```
 
-pub fn main() {
-    let bruh: ComplexStruct = ComplexStruct {
-        name: "hey".to_string(),
-        optional_value: Some(Box::new(42)),
-        values: vec![1377; 5],
-        some_other: vec![137700000000; 5],
-        metadata: std::collections::HashMap::new(),
-        nested: Box::new(NestedStruct {
-            number: Box::new(42),
-            optional_floats: vec![Some(Box::new(42 as f64)), None, Some(Box::new(42 as f64 / 2.0))],
-            data: std::collections::HashMap::new(),
-        }),
-    };
+If your implementation is correct, the following **test must not compile**.
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    bruh.free();
-    
-    println!("{}", bruh.name); 
+    #[test]
+    fn free_complex_struct() {
+        let bruh: ComplexStruct = ComplexStruct {
+            name: "hey".to_string(),
+            optional_value: Some(Box::new(42)),
+            values: vec![1377; 5],
+            some_other: vec![137700000000; 5],
+            metadata: std::collections::HashMap::new(),
+            nested: Box::new(NestedStruct {
+                number: Box::new(42),
+                optional_floats: vec![Some(Box::new(42_f64)), None, Some(Box::new(42_f64 / 2.0))],
+                data: std::collections::HashMap::new(),
+            }),
+        };
+
+        bruh.free();
+
+        assert_eq!("hey", bruh.name);
+    }
 }
 ```
 
-Note that removing the call to `bruh.free()` should allow the code to compile successfully!
+Removing the call to `bruh.free()` should allow the code to compile successfully!
+
+> **Note:** Your submitted code (the implementation of the struct and its methods) must be valid Rust code that compiles on its own. 
+> **Do not submit the non-compiling test code! Only submit the implementation.**
 
 ## Exercise 01: A Point In Space
 ```rust
