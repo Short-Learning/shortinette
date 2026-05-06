@@ -194,4 +194,21 @@ impl Cargo {
             .map(String::from)
             .collect()
     }
+
+    pub fn test_no_run(&self) -> Result<(), String> {
+        let test_output = process::Command::new("cargo")
+            .current_dir(self.dir.path())
+            .arg("test")
+            .arg("--no-run")
+            .output()
+            .expect("Failed to execute cargo test --no-run");
+
+        if test_output.status.success() {
+            return Ok(());
+        };
+
+        let compile_error = String::from_utf8_lossy(&test_output.stderr);
+
+        Err(compile_error.into_owned())
+    }
 }
