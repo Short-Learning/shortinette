@@ -116,7 +116,7 @@ pub trait Testable {
     fn check_clippy(&self) -> bool {
         let config = self.clippy_config();
 
-        self.get_cargo().check_clippy(config)
+        Cargo::copy_from(&self.ensure_path()).check_clippy(config)
     }
 
     fn get_cargo(&self) -> Cargo {
