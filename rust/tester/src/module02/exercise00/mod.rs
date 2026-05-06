@@ -78,38 +78,4 @@ impl Exercise00 {
 
         TestResult::Passed
     }
-
-    // fn run_test_success_compile(&self) -> TestResult {
-    //     const TEST_MOD: &'static [u8] = include_bytes!("./shortinette_test_success_compile.rs");
-
-    //     let cargo = Cargo::new("shortinette-test-module", true);
-    //     cargo
-    //         .add_local_dependency(
-    //             self.path()
-    //                 .to_str()
-    //                 .expect("Path did not contain valid unicode"),
-    //         )
-    //         .expect("Failed to add exercise as dependency to test project");
-
-    //     let mut lib_file = fs::File::create(cargo.path().join("src/lib.rs"))
-    //         .expect("Failed to open src/lib.rs of test module");
-
-    //     lib_file
-    //         .write_all(TEST_MOD)
-    //         .expect("Failed to write test module into src/lib.rs of test module");
-
-    //     if cargo.compile().is_err() {
-    //         eprintln!("Failed to compile");
-
-    //         return TestResult::CompilationError;
-    //     }
-
-    //     if let Err(test_output) = cargo.run_test(["shortinette_tests_0200s::free_complex_struct"]) {
-    //         eprintln!("{test_output}");
-
-    //         return TestResult::Failed;
-    //     }
-
-    //     TestResult::Passed
-    // }
 }
