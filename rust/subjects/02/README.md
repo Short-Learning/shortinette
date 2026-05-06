@@ -133,6 +133,7 @@ those already required by the subject.
 * These rules may be overridden by specific exercises.
 
 ## Exercise 00: Bruh
+
 ```rust
 // no allowed symbols
 
@@ -203,7 +204,7 @@ Removing the call to `bruh.free()` should allow the code to compile successfully
 
 ## Exercise 01: A Point In Space
 ```rust
-// allowed symbols
+// no allowed symbols
 const allowed_dependencies = [""];
 const turn_in_directory = "ex01/";
 const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
@@ -212,9 +213,9 @@ const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 Defines the following type:
 
 ```rust
-struct Point {
-    x: f32,
-    y: f32,
+pub struct Point {
+    pub x: f32,
+    pub y: f32,
 }
 ```
 
@@ -227,10 +228,10 @@ Implement the following inherent functions:
 
 ```rust
 impl Point {
-    fn new(x: f32, y: f32) -> Self;
-    fn zero() -> Self;
-    fn distance(&self, other: &Self) -> f32;
-    fn translate(&mut self, dx: f32, dy: f32);
+    pub fn new(x: f32, y: f32) -> Self;
+    pub fn zero() -> Self;
+    pub fn distance(&self, other: &Self) -> f32;
+    pub fn translate(&mut self, dx: f32, dy: f32);
 }
 ```
 
