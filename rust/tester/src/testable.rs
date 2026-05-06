@@ -18,6 +18,12 @@ pub trait Testable {
             return TestResult::CompilationError;
         }
 
+        if let Err(err) = self.cargo_tests_no_run() {
+            eprintln!("Failed to compile shortinette tests with provided code:\n{err}");
+
+            return TestResult::CompilationError;
+        }
+
         if let Err(test_output) = self.run_cargo_tests() {
             eprintln!("{test_output}");
 
@@ -51,6 +57,10 @@ pub trait Testable {
         } else {
             Err(failed_output.join("\n"))
         }
+    }
+
+    fn cargo_tests_no_run(&self) -> Result<(), String> {
+        self.prepare_cargo_tests().test_no_run()
     }
 
     fn prepare_cargo_tests(&self) -> Cargo {
@@ -104,7 +114,7 @@ pub trait Testable {
     }
 
     fn compile(&self) -> Result<Option<path::PathBuf>, TestResult> {
-        Cargo::copy_from(&self.ensure_path())
+        self.get_cargo()
             .compile()
             .map_err(|_| TestResult::CompilationError)
     }
@@ -116,7 +126,7 @@ pub trait Testable {
     fn check_clippy(&self) -> bool {
         let config = self.clippy_config();
 
-        Cargo::copy_from(&self.ensure_path()).check_clippy(config)
+        self.get_cargo().check_clippy(config)
     }
 
     fn get_cargo(&self) -> Cargo {
