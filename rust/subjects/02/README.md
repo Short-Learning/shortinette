@@ -242,23 +242,23 @@ impl Point {
 use std::{
     clone::Clone,
     cmp::{PartialOrd, PartialEq},
-    default::default,
+    default::Default,
     fmt::Debug,
 };
 
 const allowed_dependencies = [""];
-const turn_in_directory = "ex00/";
+const turn_in_directory = "ex02/";
 const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
-Create a type, may it be a `struct` or an `enum`. You simply have to name it `MyType`.
+Create a `pub`lic type, may it be a `struct` or an `enum`. You simply have to name it `MyType`.
 
 You are **not** allowed to use the `impl` keyword!
 
 ```rust
 #[cfg(test)]
-mod tests{
-    use super::*;
+mod tests {
+    use super::MyType;
 
     #[test]
     fn test_my_type() {
@@ -268,14 +268,14 @@ mod tests{
 
         println!("the default value of MyType is {instance:?}");
         println!("the clone of `instance` is {other_instance:#?}");
-        assert_eq!(
-            instance,
-            other_instance,
-            "the clone isn't the same :/"
+        assert_eq!(instance, other_instance, "the clone isn't the same :/");
+        assert!(
+            (instance > other_instance) == false,
+            "why would the clone be less than the original?"
         );
         assert!(
-            instance == other_instance,
-            "why would the clone be less or greater than the original?",
+            (instance < other_instance) == false,
+            "why would the clone be greater than the original?"
         );
     }
 }
