@@ -1,5 +1,5 @@
-use crate::cargo::Cargo;
 use crate::TestResult;
+use crate::cargo::Cargo;
 use fs_extra::file::CopyOptions;
 use rand::prelude::SliceRandom;
 use std::fs::File;
@@ -50,7 +50,7 @@ impl Testable for Exercise02 {
             String::from_utf8_lossy(&command.stderr)
         );
 
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         cargo_test_list.shuffle(&mut rng);
 
         let mut failed_output = Vec::new();
