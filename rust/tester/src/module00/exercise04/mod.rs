@@ -213,7 +213,7 @@ impl Testable for Exercise04 {
     }
 
     fn run_test(&self) -> TestResult {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
 
         if !self.check_clippy() {
             eprintln!("`cargo clippy -- -D warnings` failed");

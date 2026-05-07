@@ -34,7 +34,7 @@ pub trait Testable {
         let mut cargo_test_list = cargo.test_list(&["shortinette_tests"]);
         assert!(!cargo_test_list.is_empty(), "No shortinette tests found");
 
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         cargo_test_list.shuffle(&mut rng);
 
         let mut failed_output = Vec::new();
