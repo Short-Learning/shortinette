@@ -358,16 +358,22 @@ If either condition is unmet, return the appropriate error. If both errors apply
 The following test must compile and execute successfully:
 ```rust
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
     fn test_player() {
-        let mut player = Player { coins: 0, item: None};
+        let mut player = Player::new(0);
 
-        assert_eq!(player.buy(Item::HealthPotion), Err(BuyError::NotEnoughCoins));
+        assert_eq!(
+            player.buy(Item::HealthPotion),
+            Err(BuyError::NotEnoughCoins)
+        );
         player.coins = 250;
         assert_eq!(player.buy(Item::Ring), Ok(()));
+        assert_eq!(player.coins(), 200);
+        assert_eq!(player.item(), Some(Item::Ring));
+
         assert_eq!(player.buy(Item::UpgradeStone), Err(BuyError::TooManyItems));
 
         player.coins = 242;
