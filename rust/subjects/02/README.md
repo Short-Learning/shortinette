@@ -132,7 +132,8 @@ those already required by the subject.
 
 * These rules may be overridden by specific exercises.
 
-### Exercise 00: Bruh
+## Exercise 00: Bruh
+
 ```rust
 // no allowed symbols
 
@@ -143,55 +144,67 @@ const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 
 Given this struct
 ```rust
-struct ComplexStruct {
-    name: String,
-    optional_value: Option<Box<i32>>,
-    values: Vec<i32>,
-    some_other: Vec<u128>,
-    metadata: std::collections::HashMap<String, Vec<u8>>,
-    nested: Box<NestedStruct>,
+pub struct ComplexStruct {
+    pub name: String,
+    pub optional_value: Option<Box<i32>>,
+    pub values: Vec<i32>,
+    pub some_other: Vec<u128>,
+    pub metadata: std::collections::HashMap<String, Vec<u8>>,
+    pub nested: Box<NestedStruct>,
 }
 
-struct NestedStruct {
-    number: Box<i32>,
-    optional_floats: Vec<Option<Box<f64>>>,
-    data: std::collections::HashMap<String, Option<Box<i32>>>,
+pub struct NestedStruct {
+    pub number: Box<i32>,
+    pub optional_floats: Vec<Option<Box<f64>>>,
+    pub data: std::collections::HashMap<String, Option<Box<i32>>>,
 }
 ```
 
-Implement the `free` method, such that the following code does *not* compile:
+Implement a `free` method for it. Your implementation must be designed such that any attempt to use an instance of `ComplexStruct` after calling its `.free()` results in a compiler error.
 ```rust
 impl ComplexStruct {
-    pub fn free(...) {
+    pub fn free(/* ... */) {
         // Your implementation
     }
 }
+```
 
-pub fn main() {
-    let bruh: ComplexStruct = ComplexStruct {
-        name: "hey".to_string(),
-        optional_value: Some(Box::new(42)),
-        values: vec![1377; 5],
-        some_other: vec![137700000000; 5],
-        metadata: std::collections::HashMap::new(),
-        nested: Box::new(NestedStruct {
-            number: Box::new(42),
-            optional_floats: vec![Some(Box::new(42 as f64)), None, Some(Box::new(42 as f64 / 2.0))],
-            data: std::collections::HashMap::new(),
-        }),
-    };
+If your implementation is correct, the following **test must not compile**.
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    bruh.free();
-    
-    println!("{}", bruh.name); 
+    #[test]
+    fn free_complex_struct() {
+        let bruh: ComplexStruct = ComplexStruct {
+            name: "hey".to_string(),
+            optional_value: Some(Box::new(42)),
+            values: vec![1377; 5],
+            some_other: vec![137700000000; 5],
+            metadata: std::collections::HashMap::new(),
+            nested: Box::new(NestedStruct {
+                number: Box::new(42),
+                optional_floats: vec![Some(Box::new(42_f64)), None, Some(Box::new(42_f64 / 2.0))],
+                data: std::collections::HashMap::new(),
+            }),
+        };
+
+        bruh.free();
+
+        assert_eq!("hey", bruh.name);
+    }
 }
 ```
 
-Note that removing the call to `bruh.free()` should allow the code to compile successfully!
+Removing the call to `bruh.free()` should allow the code to compile successfully!
+
+> **Note:** Your submitted code (the implementation of the struct and its methods) must be valid Rust code that compiles on its own. 
+> **Do not submit the non-compiling test code! Only submit the implementation.**
 
 ## Exercise 01: A Point In Space
 ```rust
-// allowed symbols
+// no allowed symbols
 const allowed_dependencies = [""];
 const turn_in_directory = "ex01/";
 const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
@@ -200,9 +213,9 @@ const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 Defines the following type:
 
 ```rust
-struct Point {
-    x: f32,
-    y: f32,
+pub struct Point {
+    pub x: f32,
+    pub y: f32,
 }
 ```
 
@@ -215,10 +228,10 @@ Implement the following inherent functions:
 
 ```rust
 impl Point {
-    fn new(x: f32, y: f32) -> Self;
-    fn zero() -> Self;
-    fn distance(&self, other: &Self) -> f32;
-    fn translate(&mut self, dx: f32, dy: f32);
+    pub fn new(x: f32, y: f32) -> Self;
+    pub fn zero() -> Self;
+    pub fn distance(&self, other: &Self) -> f32;
+    pub fn translate(&mut self, dx: f32, dy: f32);
 }
 ```
 
@@ -229,22 +242,22 @@ impl Point {
 use std::{
     clone::Clone,
     cmp::{PartialOrd, PartialEq},
-    default::default,
+    default::Default,
     fmt::Debug,
 };
 
 const allowed_dependencies = [""];
-const turn_in_directory = "ex00/";
+const turn_in_directory = "ex02/";
 const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
 ```
 
-Create a type, may it be a `struct` or an `enum`. You simply have to name it `MyType`.
+Create a `pub`lic type, may it be a `struct` or an `enum`. You simply have to name it `MyType`.
 
 You are **not** allowed to use the `impl` keyword!
 
 ```rust
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
@@ -255,14 +268,14 @@ mod tests{
 
         println!("the default value of MyType is {instance:?}");
         println!("the clone of `instance` is {other_instance:#?}");
-        assert_eq!(
-            instance,
-            other_instance,
-            "the clone isn't the same :/"
+        assert_eq!(instance, other_instance, "the clone isn't the same :/");
+        assert!(
+            (instance > other_instance) == false,
+            "why would the clone be less than the original?"
         );
         assert!(
-            instance == other_instance,
-            "why would the clone be less or greater than the original?",
+            (instance < other_instance) == false,
+            "why would the clone be greater than the original?"
         );
     }
 }
@@ -270,9 +283,11 @@ mod tests{
 
 Copy the above `test` function and make it compile.
 
-## Exercise 03 Money money money
+## Exercise 03: Money money money
 
 ```rust
+// no allowed symbols
+
 const allowed_dependencies = [""];
 const turn_in_directory = "ex03/";
 const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
@@ -282,28 +297,29 @@ Define the following types:
 
 ```rust
 #[derive(PartialEq, Debug)]
-enum BuyError {
+pub enum BuyError {
     NotEnoughCoins,
     TooManyItems,
 }
+
 #[derive(PartialEq, Debug)]
-enum SellError {
+pub enum SellError {
     TooManyCoins,
     NoItemToSell,
 }
 
 #[repr(u8)]
-#[derive(Copy, Clone,Debug,PartialEq)]
-enum Item {
-    Sword = 10,        
-    Shield = 15,       
-    HealthPotion = 5,  
-    UpgradeStone = 25, 
-    Ring = 50,         
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Item {
+    Sword = 10,
+    Shield = 15,
+    HealthPotion = 5,
+    UpgradeStone = 25,
+    Ring = 50,
 }
 
 #[derive(PartialEq, Debug)]
-struct Player {
+pub struct Player {
     coins: u8,
     item: Option<Item>
 }
@@ -312,40 +328,52 @@ struct Player {
 Implement these functions
 ```rust
 impl Player {
+    pub fn new(coins: u8) -> Self;
     pub fn buy(&mut self, item: Item) -> Result<(), BuyError>;
+    pub fn coins(&self) -> u8;
+    pub fn item(&self) -> Option<Item>;
     pub fn sell(&mut self) -> Result<(), SellError>;
 }
 ```
 Ensure they operate as follows:
 
-`buy` verifies that:
-1. The player has enough coins
-2. The player has enough room to store the item.
+`new` creates a new `Player` with the amount of coins passed to it and with no item.
 
-If either condition is unmet, return the appropriate error.
+`buy` verifies that:
+- The player has enough coins
+- The player has enough room to store the item.
+
+If either condition is unmet, return the appropriate error. If both errors apply simultaneously, return any of them.
+
+`coins` returns the amount of coins the `Player` currently has.
+
+`item` returns the item of the `Player` if it has one.
 
 `sell` verifies that:
-1. The player has an item to sell
-2. The player can store the received coins without his pocket `overflowing`
+- The player has an item to sell
+- The player can store the received coins without his pocket `overflowing`
 
-If either condition is unmet, return the appropriate error.
-
-If both errors apply simultaneously, return any of them.
+If either condition is unmet, return the appropriate error. If both errors apply simultaneously, return any of them.
 
 The following test must compile and execute successfully:
 ```rust
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
     fn test_player() {
-        let mut player = Player { coins: 0, item: None};
+        let mut player = Player::new(0);
 
-
-        assert_eq!(player.buy(Item::HealthPotion), Err(BuyError::NotEnoughCoins));
+        assert_eq!(
+            player.buy(Item::HealthPotion),
+            Err(BuyError::NotEnoughCoins)
+        );
         player.coins = 250;
         assert_eq!(player.buy(Item::Ring), Ok(()));
+        assert_eq!(player.coins(), 200);
+        assert_eq!(player.item(), Some(Item::Ring));
+
         assert_eq!(player.buy(Item::UpgradeStone), Err(BuyError::TooManyItems));
 
         player.coins = 242;
@@ -460,7 +488,7 @@ the input string contains no tokens. The part of `s` that has been consumed is s
 original `&str`.
 
 **Note:** You do not have to handle single or double quotes, nor do you have to care about escaping
-with `\\`!
+with `\`!
 
 `next_token` must be usable in this way:
 

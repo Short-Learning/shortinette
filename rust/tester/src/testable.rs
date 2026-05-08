@@ -18,6 +18,12 @@ pub trait Testable {
             return TestResult::CompilationError;
         }
 
+        if let Err(err) = self.cargo_tests_no_run() {
+            eprintln!("Failed to compile shortinette tests with provided code:\n{err}");
+
+            return TestResult::CompilationError;
+        }
+
         if let Err(test_output) = self.run_cargo_tests() {
             eprintln!("{test_output}");
 
@@ -53,6 +59,10 @@ pub trait Testable {
         }
     }
 
+    fn cargo_tests_no_run(&self) -> Result<(), String> {
+        self.prepare_cargo_tests().test_no_run()
+    }
+
     fn prepare_cargo_tests(&self) -> Cargo {
         let cargo = Cargo::new("shortinette-test-module", true);
         cargo
@@ -64,10 +74,10 @@ pub trait Testable {
             .expect("Failed to add exercise as dependency to test project");
 
         cargo
-            .add_dependency("rand", "0.8")
+            .add_dependency("rand", "0.10.1")
             .expect("Failed to add rand as dependency to test project");
 
-        cargo 
+        cargo
             .add_dependency("libc", "0.2.169")
             .expect("Failed to add libc as dependency to test project");
 
@@ -104,7 +114,7 @@ pub trait Testable {
     }
 
     fn compile(&self) -> Result<Option<path::PathBuf>, TestResult> {
-        Cargo::copy_from(&self.ensure_path())
+        self.get_cargo()
             .compile()
             .map_err(|_| TestResult::CompilationError)
     }
