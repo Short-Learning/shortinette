@@ -74,7 +74,7 @@ pub trait Testable {
             .expect("Failed to add exercise as dependency to test project");
 
         cargo
-            .add_dependency("rand", "0.8")
+            .add_dependency("rand", "0.10.1")
             .expect("Failed to add rand as dependency to test project");
 
         cargo
