@@ -258,7 +258,7 @@ You are **not** allowed to use the `impl` keyword!
 ```rust
 #[cfg(test)]
 mod tests {
-    use super::MyType;
+    use super::*;
 
     #[test]
     fn test_my_type() {
@@ -286,6 +286,8 @@ Copy the above `test` function and make it compile.
 ## Exercise 03: Money money money
 
 ```rust
+// no allowed symbols
+
 const allowed_dependencies = [""];
 const turn_in_directory = "ex03/";
 const files_to_turn_in = ["src/lib.rs", "Cargo.toml"];
@@ -295,28 +297,29 @@ Define the following types:
 
 ```rust
 #[derive(PartialEq, Debug)]
-enum BuyError {
+pub enum BuyError {
     NotEnoughCoins,
     TooManyItems,
 }
+
 #[derive(PartialEq, Debug)]
-enum SellError {
+pub enum SellError {
     TooManyCoins,
     NoItemToSell,
 }
 
 #[repr(u8)]
-#[derive(Copy, Clone,Debug,PartialEq)]
-enum Item {
-    Sword = 10,        
-    Shield = 15,       
-    HealthPotion = 5,  
-    UpgradeStone = 25, 
-    Ring = 50,         
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Item {
+    Sword = 10,
+    Shield = 15,
+    HealthPotion = 5,
+    UpgradeStone = 25,
+    Ring = 50,
 }
 
 #[derive(PartialEq, Debug)]
-struct Player {
+pub struct Player {
     coins: u8,
     item: Option<Item>
 }
@@ -325,25 +328,32 @@ struct Player {
 Implement these functions
 ```rust
 impl Player {
+    pub fn new(coins: u8) -> Self;
     pub fn buy(&mut self, item: Item) -> Result<(), BuyError>;
+    pub fn coins(&self) -> u8;
+    pub fn item(&self) -> Option<Item>;
     pub fn sell(&mut self) -> Result<(), SellError>;
 }
 ```
 Ensure they operate as follows:
 
-`buy` verifies that:
-1. The player has enough coins
-2. The player has enough room to store the item.
+`new` creates a new `Player` with the amount of coins passed to it and with no item.
 
-If either condition is unmet, return the appropriate error.
+`buy` verifies that:
+- The player has enough coins
+- The player has enough room to store the item.
+
+If either condition is unmet, return the appropriate error. If both errors apply simultaneously, return any of them.
+
+`coins` returns the amount of coins the `Player` currently has.
+
+`item` returns the item of the `Player` if it has one.
 
 `sell` verifies that:
-1. The player has an item to sell
-2. The player can store the received coins without his pocket `overflowing`
+- The player has an item to sell
+- The player can store the received coins without his pocket `overflowing`
 
-If either condition is unmet, return the appropriate error.
-
-If both errors apply simultaneously, return any of them.
+If either condition is unmet, return the appropriate error. If both errors apply simultaneously, return any of them.
 
 The following test must compile and execute successfully:
 ```rust
@@ -354,7 +364,6 @@ mod tests{
     #[test]
     fn test_player() {
         let mut player = Player { coins: 0, item: None};
-
 
         assert_eq!(player.buy(Item::HealthPotion), Err(BuyError::NotEnoughCoins));
         player.coins = 250;
